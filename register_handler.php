@@ -20,7 +20,7 @@ function add_user(string $email, string $pass)
     $pdo = new PDO("mysql:host=localhost;dbname=study;", "root", "root");
     $sql = "INSERT INTO registration (email, password) VALUES (:email, :password)";
     $statement = $pdo->prepare($sql);
-    $statement->execute(["email" => $email, "password" => $pass]);
+    $statement->execute(["email" => $email, "password" => password_hash($pass, PASSWORD_DEFAULT)]);
 }
 
 if (get_user_by_email($email)) {
@@ -32,6 +32,6 @@ if (get_user_by_email($email)) {
     add_user($email, $pass);
     $message = "<strong>Отлично!</strong> Регистрация прошла успешно";
     $_SESSION['success'] = $message;
-    header("Location: /page_register.php");
+    header("Location: /page_login.php");
     exit;
 }

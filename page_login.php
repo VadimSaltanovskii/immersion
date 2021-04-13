@@ -36,7 +36,7 @@
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-            
+
             <?php if (isset($_SESSION['success'])) : ?>
                 <div class="alert alert-success">
                     <?php
@@ -45,15 +45,24 @@
                     ?>
                 </div>
             <?php endif; ?>
-            
-            <form action="">
+
+            <?php if (isset($_SESSION['danger'])) : ?>
+                <div class="alert alert-danger text-dark" role="alert">
+                    <?php
+                    echo $_SESSION['danger'];
+                    unset($_SESSION['danger']);
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="login_handler.php" method="post">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
+                    <input type="email" id="username" name="login_email" class="form-control" placeholder="Эл. адрес" value="">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="">
+                    <input type="password" id="password" name="login_password" class="form-control" placeholder="Введите пароль">
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">

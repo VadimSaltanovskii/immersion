@@ -14,7 +14,7 @@ function add_user(string $email, string $pass)
     $pdo = new PDO("mysql:host=localhost;dbname=study;", "root", "root");
     $sql = "INSERT INTO registration (email, password) VALUES (:email, :password)";
     $statement = $pdo->prepare($sql);
-    $statement->execute(["email" => $email, "password" => $pass]);
+    $statement->execute(["email" => $email, "password" => password_hash($pass, PASSWORD_DEFAULT)]);
 };
 
 function set_flash_message(string $type, string $message)
@@ -32,17 +32,17 @@ function redirect_to(string $path)
 function check_user(string $email, string $password)
 {
     $pdo = new PDO("mysql:host=localhost;dbname=study;", "root", "root");
-    $sql = "SELECT * FROM registration WHERE email=:email AND password=:password";
+    $sql = "SELECT * FROM registration WHERE email=:email";
     $statement = $pdo->prepare($sql);
     $statement->execute([
         "email" => $email,
-        "password" => $password,
     ]);
     $target = $statement->fetch(PDO::FETCH_ASSOC);
-    if (!$target) {
+
+    if ($target && password_verify($password, $target['password'])) {
+        redirect_to("/users.php");
+    } else {
         set_flash_message("danger", "Пользователь не найден");
         redirect_to("/page_login.php");
-    } else {
-        redirect_to("/users.php");
     }
 };

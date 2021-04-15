@@ -62,26 +62,22 @@
                             </div>
                             <div class="col-xl-6 ml-auto mr-auto">
                                 <div class="card p-4 rounded-plus bg-faded">
-
-                                    <?php if (isset($_SESSION['danger'])) : ?>
+                                    <?php if (isset($_SESSION["danger"])) : ?>
                                         <div class="alert alert-danger text-dark" role="alert">
-                                            <?php
-                                            echo $_SESSION['danger'];
-                                            unset($_SESSION['danger']);
-                                            ?>
+                                            <?php echo $_SESSION["danger"];
+                                            unset($_SESSION["danger"]); ?>
                                         </div>
                                     <?php endif; ?>
-
-                                    <form id="js-login" novalidate="" action="register_handler.php" method="post">
+                                    <form id="js-login" novalidate="" action="./register_handler.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
-                                            <input type="email" id="emailverify" name="email" class="form-control" placeholder="Эл. адрес" required>
+                                            <input type="email" id="emailverify" name="mail" class="form-control" placeholder="Эл. адрес" required>
                                             <div class="invalid-feedback">Заполните поле.</div>
                                             <div class="help-block">Эл. адрес будет вашим логином при авторизации</div>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label" for="userpassword">Пароль <br></label>
-                                            <input type="password" id="userpassword" name="pass" class="form-control" placeholder="Введите пароль" required>
+                                            <input type="password" id="userpassword" name="pass" class="form-control" placeholder="" required>
                                             <div class="invalid-feedback">Заполните поле.</div>
                                         </div>
 

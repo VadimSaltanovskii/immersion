@@ -1,12 +1,16 @@
 <?php
-
 session_start();
-require "functions.php";
+require "./functions.php";
 
+$mail = $_POST["mail"];
+$pass = $_POST["pass"];
 
-$email = $_POST['login_email'];
-$password = $_POST['login_password'];
-
-check_user($email, $password);
-
-
+if (check_user_data($mail, $pass)) {
+    set_flash_message("success", "Успешно");
+    $_SESSION["currentUser"] = get_user($mail);
+    $_SESSION["logged"] = $mail;
+    redirect_to("users.php");
+} else {
+    set_flash_message("danger", "Неверный логин или пароль");
+    redirect_to("page_login.php");
+}

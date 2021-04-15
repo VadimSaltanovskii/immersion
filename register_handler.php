@@ -1,17 +1,15 @@
 <?php
-
 session_start();
+require "./functions.php";
 
-require "functions.php";
+$mail = $_POST["mail"];
+$pass = $_POST["pass"];
 
-$email = $_POST['email'];
-$pass = $_POST['pass'];
-
-if (get_user_by_email($email)) {
+if (check_mail_in_base($mail)) {
     set_flash_message("danger", "<strong>Уведомление!</strong> Этот эл. адрес уже занят другим пользователем.");
-    redirect_to("/page_register.php");
+    redirect_to("page_register.php");
 } else {
-    add_user($email, $pass);
-    set_flash_message("success", "<strong>Отлично!</strong> Регистрация прошла успешно");
-    redirect_to("/page_login.php");
+    save_user($mail, $pass);
+    set_flash_message("success", "Регистрация успешна");
+    redirect_to("page_login.php");
 }

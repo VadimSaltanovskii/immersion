@@ -21,6 +21,16 @@ function save_user(string $mail, string $pass)
     ]);
 }
 
+function update_user_info (int $id, string $name, string $job, string $tel, string $address) {
+    $pdo = new PDO ("mysql:host=localhost;dbname=study", "root", "root");
+    $sql = "SELECT * FROM registration WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["id" => $id]);
+    $sql2 = "UPDATE registration SET name = $name, job = $job, tel = $tel, address = $address";
+    $statement = $pdo->prepare($sql2);
+    $statement->execute();
+}
+
 function check_user_data(string $mail, string $pass): bool
 {
     $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
@@ -42,7 +52,8 @@ function get_user(string $mail)
     return $currentUser;
 }
 
-function get_all_users () {
+function get_all_users()
+{
     $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
     $sql = "SELECT * FROM registration";
     $statement = $pdo->prepare($sql);

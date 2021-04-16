@@ -39,7 +39,7 @@ if (is_not_logged()) {
                     <a class="nav-link" href="page_login.html">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="./out_handler.php">Выйти</a>
                 </li>
             </ul>
         </div>
@@ -52,6 +52,12 @@ if (is_not_logged()) {
                 unset($_SESSION["success"]); ?>
             </div>
         <?php endif; ?>
+        <?php if (isset($_SESSION["danger"])) : ?>
+            <div class="alert alert-danger">
+                <?php echo $_SESSION["danger"];
+                unset($_SESSION["danger"]); ?>
+            </div>
+        <?php endif; ?>
 
         <div class="subheader">
             <h1 class="subheader-title">
@@ -62,7 +68,7 @@ if (is_not_logged()) {
             <div class="col-xl-12">
 
                 <?php if ($_SESSION["currentUser"]["role"] === "admin") : ?>
-                    <a class="btn btn-success" href="create_user.html">Добавить</a>
+                    <a class="btn btn-success" href="./create_user.php">Добавить</a>
                 <?php endif; ?>
 
                 <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">

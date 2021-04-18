@@ -47,14 +47,14 @@ function add_status(int $id, string $status)
     ]);
 }
 
-function add_photo(int $id, $photo)
+function add_photo(int $id, array $photo)
 {
     $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
     $sql = "UPDATE registration SET photo=:photo WHERE id=:id";
     $statement = $pdo->prepare($sql);
     $statement->execute([
         "id" => $id,
-        "photo" => $photo
+        "photo" => $photo["tmp_name"],
     ]);
 }
 

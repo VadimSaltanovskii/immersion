@@ -61,7 +61,7 @@ if (!is_logged() || $_SESSION["logged_user"]["role"] != "admin") {
                 <?php display_flash_message("success") ?>
             </div>
         <?php endif; ?>
-        <form action="./create_user_handler.php" method="POST">
+        <form action="./create_user_handler.php" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -130,7 +130,7 @@ if (!is_logged() || $_SESSION["logged_user"]["role"] != "admin") {
 
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Загрузить аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <input type="file" id="example-fileinput" name="new_photo" class="form-control-file">
                                 </div>
                             </div>
                         </div>

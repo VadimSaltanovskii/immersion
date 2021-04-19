@@ -69,6 +69,23 @@ function set_social_links(int $id, string $vk, string $telega, string $inst)
     ]);
 }
 
+function add_photo(int $id, array $file)
+{
+    $tmp_name = $file["tmp_name"];
+    $name = md5_file($tmp_name);
+    $image = getimagesize($tmp_name);
+    $extension = image_type_to_extension($image[2]);
+    move_uploaded_file($tmp_name, "./img/demo/avatars/" . $name . $extension);
+
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET photo = :photo WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "photo" => $name . $extension,
+    ]);
+}
+
 
 function authorization(string $email, string $password): bool
 {

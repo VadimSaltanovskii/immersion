@@ -24,17 +24,27 @@ function save_user(string $email, string $password)
 function authorization(string $email, string $password): bool
 {
     $current_user = check_email_in_db($email);
-
     if ($current_user && password_verify($password, $current_user["password"])) {
-        set_flash_message("success", "Авторизация успешна");
         return true;
     } else {
-        set_flash_message("danger", "Пользователь не найден либо неверно введены логин или пароль");
         return false;
     }
 }
 
+function is_logged()
+{
+    return isset($_SESSION["logged_user"]);
+}
 
+function get_all_users()
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "SELECT * FROM users";
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+    $users = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $users;
+}
 
 
 

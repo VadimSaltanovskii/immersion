@@ -40,7 +40,7 @@ $current_user = check_email_in_db($_SESSION["logged_user"]["email"]);
                     <a class="nav-link" href="page_login.html">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="./logout.php">Выйти</a>
                 </li>
             </ul>
         </div>

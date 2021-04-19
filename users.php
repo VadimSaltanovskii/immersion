@@ -103,7 +103,7 @@ $users = get_all_users();
                                     </a>
                                     <?php if ($_SESSION["logged_user"]["role"] === "admin" || $_SESSION["logged_user"]["id"] === $one_user["id"]) : ?>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="edit.html">
+                                            <a class="dropdown-item" href="edit.php?id=<?php echo $one_user["id"]; ?>">
                                                 <i class="fa fa-edit"></i>
                                                 Редактировать</a>
                                             <a class="dropdown-item" href="security.html">

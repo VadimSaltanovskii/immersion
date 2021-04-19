@@ -86,7 +86,6 @@ function add_photo(int $id, array $file)
     ]);
 }
 
-
 function authorization(string $email, string $password): bool
 {
     $current_user = check_email_in_db($email);

@@ -49,13 +49,22 @@ function add_status(int $id, string $status)
 
 function add_photo(int $id, array $photo)
 {
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "UPDATE registration SET photo=:photo WHERE id=:id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute([
-        "id" => $id,
-        "photo" => $photo["tmp_name"],
-    ]);
+    if ($photo && $photo["error"] == UPLOAD_ERR_OK) {
+        $tmpName = $photo["tmp_name"];
+        $newName = md5_file($tmpName);
+        $image = getimagesize($tmpName);
+        $extension = image_type_to_extension($image[2]);
+        $format = str_replace("jpeg", "jpg", $extension);
+        move_uploaded_file($tmpName, "./img/avatars/" . $newName . $format);
+
+        $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
+        $sql = "UPDATE registration SET photo=:photo WHERE id=:id";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([
+            "id" => $id,
+            "photo" => $newName . $format,
+        ]);
+    }
 }
 
 function add_social_net_links(int $id, string $vk, string $telega, string $inst)
@@ -117,4 +126,3 @@ function redirect_to(string $path)
     header("Location: /$path");
     exit;
 }
-

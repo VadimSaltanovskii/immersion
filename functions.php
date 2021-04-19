@@ -117,3 +117,4 @@ function redirect_to(string $path)
     header("Location: /$path");
     exit;
 }
+

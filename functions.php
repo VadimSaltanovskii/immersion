@@ -6,7 +6,8 @@ function check_email_in_db(string $email)
     $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
     $statement->execute(["email" => $email]);
-    return $statement->fetch(PDO::FETCH_ASSOC);
+    $current_user = $statement->fetch(PDO::FETCH_ASSOC);
+    return $current_user;
 };
 
 function save_user(string $email, string $password)
@@ -18,12 +19,20 @@ function save_user(string $email, string $password)
         "email" => $email,
         "password" => password_hash($password, PASSWORD_DEFAULT),
     ]);
-    $sql = "SELECT * FROM users WHERE email=:email";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(["email" => $email]);
-    $current_user = $statement->fetch(PDO::FETCH_ASSOC);
-    return $current_user["id"];
 };
+
+function authorization(string $email, string $password): bool
+{
+    $current_user = check_email_in_db($email);
+
+    if ($current_user && password_verify($password, $current_user["password"])) {
+        set_flash_message("success", "Авторизация успешна");
+        return true;
+    } else {
+        set_flash_message("danger", "Пользователь не найден либо неверно введены логин или пароль");
+        return false;
+    }
+}
 
 
 

@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php
+session_start();
+require "./functions.php";
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,29 +41,26 @@
             </a>
         </div>
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-
-            <?php if (isset($_SESSION["success"])) : ?>
-                <div class="alert alert-success">
-                    <?php echo $_SESSION["success"];
-                    unset($_SESSION["success"]); ?>
-                </div>
-            <?php endif; ?>
-
             <?php if (isset($_SESSION["danger"])) : ?>
                 <div class="alert alert-danger text-dark" role="alert">
-                    <?php echo $_SESSION["danger"];
-                    unset($_SESSION["danger"]); ?>
+                    <?php display_flash_message("danger") ?>
                 </div>
             <?php endif; ?>
 
-            <form action="./login_handler.php" method="POST">
+            <?php if (isset($_SESSION["success"])) : ?>
+                <div class="alert alert-success text-dark" role="alert">
+                    <?php display_flash_message("success") ?>
+                </div>
+            <?php endif; ?>
+
+            <form action="">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" name="mail" class="form-control" placeholder="Эл. адрес" value="">
+                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" name="pass" class="form-control" placeholder="Введите пароль">
+                    <input type="password" id="password" class="form-control" placeholder="">
                 </div>
                 <div class="form-group text-left">
                     <div class="custom-control custom-checkbox">

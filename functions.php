@@ -1,128 +1,58 @@
 <?php
 
-function check_mail_in_base(string $mail): bool
+function check_email_in_db(string $email)
 {
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "SELECT * FROM registration WHERE mail=:mail";
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
-    $statement->execute(["mail" => $mail]);
-    $currentMail = $statement->fetch(PDO::FETCH_ASSOC);
-    return !empty($currentMail);
-}
+    $statement->execute(["email" => $email]);
+    return $statement->fetch(PDO::FETCH_ASSOC);
+};
 
-function save_user(string $mail, string $pass)
+function save_user(string $email, string $password)
 {
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "INSERT INTO registration (mail, pass) VALUES (:mail, :pass)";
-    $statement = $pdo->prepare($sql);
-    $statement->execute([
-        "mail" => $mail,
-        "pass" => password_hash($pass, PASSWORD_DEFAULT),
-    ]);
-}
-
-
-function update_user_info(int $id, string $name, string $job, string $tel, string $address)
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "UPDATE registration SET name=:name, job=:job, tel=:tel, address=:address WHERE id=:id";
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "INSERT INTO users (email, password) VALUES (:email, :password)";
     $statement = $pdo->prepare($sql);
     $statement->execute([
-        "id" => $id,
-        "name" => $name,
-        "job" => $job,
-        "tel" => $tel,
-        "address" => $address,
+        "email" => $email,
+        "password" => password_hash($password, PASSWORD_DEFAULT),
     ]);
-}
-
-function add_status(int $id, string $status)
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "UPDATE registration SET status=:status WHERE id=:id";
+    $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
-    $statement->execute([
-        "id" => $id,
-        "status" => $status
-    ]);
-}
+    $statement->execute(["email" => $email]);
+    $current_user = $statement->fetch(PDO::FETCH_ASSOC);
+    return $current_user["id"];
+};
 
-function add_photo(int $id, array $photo)
-{
-    if ($photo && $photo["error"] == UPLOAD_ERR_OK) {
-        $tmpName = $photo["tmp_name"];
-        $newName = md5_file($tmpName);
-        $image = getimagesize($tmpName);
-        $extension = image_type_to_extension($image[2]);
-        $format = str_replace("jpeg", "jpg", $extension);
-        move_uploaded_file($tmpName, "./img/avatars/" . $newName . $format);
 
-        $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-        $sql = "UPDATE registration SET photo=:photo WHERE id=:id";
-        $statement = $pdo->prepare($sql);
-        $statement->execute([
-            "id" => $id,
-            "photo" => $newName . $format,
-        ]);
-    }
-}
 
-function add_social_net_links(int $id, string $vk, string $telega, string $inst)
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "UPDATE registration SET vk=:vk, telega=:telega, inst=:inst WHERE id=:id";
-    $statement = $pdo->prepare($sql);
-    $statement->execute([
-        "id" => $id,
-        "vk" => $vk,
-        "telega" => $telega,
-        "inst" => $inst,
-    ]);
-}
 
-function check_user_data(string $mail, string $pass): bool
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "SELECT * FROM registration WHERE mail=:mail";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(["mail" => $mail]);
-    $currentUser = $statement->fetch(PDO::FETCH_ASSOC);
 
-    return !empty($currentUser) && password_verify($pass, $currentUser["pass"]);
-}
 
-function get_user(string $mail)
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "SELECT * FROM registration WHERE mail=:mail";
-    $statement = $pdo->prepare($sql);
-    $statement->execute(["mail" => $mail]);
-    $currentUser = $statement->fetch(PDO::FETCH_ASSOC);
-    return $currentUser;
-}
 
-function get_all_users()
-{
-    $pdo = new PDO("mysql:host=localhost;dbname=study", "root", "root");
-    $sql = "SELECT * FROM registration";
-    $statement = $pdo->prepare($sql);
-    $statement->execute();
-    $users = $statement->fetchAll(PDO::FETCH_ASSOC);
-    return $users;
-}
 
-function is_not_logged()
-{
-    return !isset($_SESSION["logged"]);
-}
+
+
+
+
+
+
+
 
 function set_flash_message(string $type, string $message)
 {
     $_SESSION[$type] = $message;
+};
+
+function display_flash_message(string $type)
+{
+    echo $_SESSION[$type];
+    unset($_SESSION[$type]);
 }
 
 function redirect_to(string $path)
 {
-    header("Location: /$path");
+    header("Location: ./$path");
     exit;
-}
+};

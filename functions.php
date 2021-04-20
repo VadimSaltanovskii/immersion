@@ -7,7 +7,8 @@ function check_email_in_base(string $email): bool
     $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
     $statement->execute(["email" => $email]);
-    return $statement->fetch(PDO::FETCH_ASSOC);
+    $target = $statement->fetch(PDO::FETCH_ASSOC);
+    return !empty($target);
 }
 // 2. Созранить в базу:
 function save_new_in_base(string $email, string $password)
@@ -21,7 +22,7 @@ function save_new_in_base(string $email, string $password)
     ]);
 }
 // 3. Получить пользователя по id:
-function get_current_user(string $id)
+function get_user(string $id)
 {
     $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
     $sql = "SELECT * FROM users WHERE id=:id";

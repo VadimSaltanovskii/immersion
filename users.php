@@ -68,7 +68,7 @@ $all_users = get_all_users();
         <div class="row">
             <div class="col-xl-12">
                 <?php if ($_SESSION["isLogged"]["role"] === "admin") : ?>
-                    <a class="btn btn-success" href="create_user.html">Добавить</a>
+                    <a class="btn btn-success" href="./create_user.php">Добавить</a>
                 <?php endif; ?>
 
                 <div class="border-faded bg-faded p-3 mb-g d-flex mt-3">

@@ -48,3 +48,13 @@ function redirect_to(string $filename)
     header("Location: ./$filename");
     exit;
 }
+// 7. Проверка авторизации:
+function user_authorization(string $email, string $password): bool
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "SELECT * FROM users WHERE email=:email";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["email" => $email]);
+    $target = $statement->fetch(PDO::FETCH_ASSOC);
+    return $target && password_verify($password, $target["password"]);
+}

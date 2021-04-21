@@ -177,7 +177,7 @@ if (!isset($_SESSION["isLogged"])) {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <input type="text" name="new_telegram" class="form-control border-left-0 bg-transparent pl-0">
+                                            <input type="text" name="new_telega" class="form-control border-left-0 bg-transparent pl-0">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -191,7 +191,7 @@ if (!isset($_SESSION["isLogged"])) {
                                                     </span>
                                                 </span>
                                             </div>
-                                            <input type="text" name="new_instagram" class="form-control border-left-0 bg-transparent pl-0">
+                                            <input type="text" name="new_inst" class="form-control border-left-0 bg-transparent pl-0">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">

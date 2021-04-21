@@ -68,3 +68,41 @@ function get_all_users(): array
     $users = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $users;
 }
+// 9. Редактировать общую информацию:
+function update_general_info($id, $name, $job, $tel, $address)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET name =:name, job=:job, tel=:tel, address=:address WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "name" => $name,
+        "job" => $job,
+        "tel" => $tel,
+        "address" => $address,
+    ]);
+}
+// 10. Установить статус:
+function set_status($id, $status)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET status =:status WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "status" => $status,
+    ]);
+}
+// 11. Добавить ссылки на соц. сети:
+function set_social_links($id, $vk, $telega, $inst)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET vk=:vk, telega=:telega, inst=:inst WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "vk" => $vk,
+        "telega" => $telega,
+        "inst" => $inst,
+    ]);
+}

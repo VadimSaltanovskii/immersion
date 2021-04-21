@@ -122,3 +122,13 @@ function add_avatar($id, $avatar)
         "avatar" => $name . $extension,
     ]);
 }
+// 13. Получить пользователя по id:
+function get_user_by_id($id)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "SELECT * FROM users WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute(["id" => $id]);
+    $target = $statement->fetch(PDO::FETCH_ASSOC);
+    return $target;
+}

@@ -132,3 +132,15 @@ function get_user_by_id($id)
     $target = $statement->fetch(PDO::FETCH_ASSOC);
     return $target;
 }
+// 14. Редактировать данные для входа:
+function edit_credentials($id, $email, $password)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET email =:email, password=:password WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "email" => $email,
+        "password" => password_hash($password, PASSWORD_DEFAULT),
+    ]);
+}

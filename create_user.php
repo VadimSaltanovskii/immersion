@@ -128,9 +128,11 @@ if (!isset($_SESSION["isLogged"])) {
                                 <div class="form-group">
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select class="form-control" name="new_status" id="example-select">
-                                        <option>Онлайн</option>
-                                        <option>Отошел</option>
-                                        <option>Не беспокоить</option>
+                                        <?php
+                                        $statuses = ["Онлайн", "Отошел", "Не беспокоить", "Готовлю кушать", "Сосредоточенный", "Банан"];
+                                        foreach ($statuses as $status) : ?>
+                                            <option><?php echo $status ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
 

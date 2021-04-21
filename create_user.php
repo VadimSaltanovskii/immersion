@@ -67,7 +67,7 @@ if (!isset($_SESSION["isLogged"])) {
 
 
         </div>
-        <form action="./create_handler.php" method="POST">
+        <form action="./create_handler.php" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -136,7 +136,7 @@ if (!isset($_SESSION["isLogged"])) {
 
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Загрузить аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <input type="file" id="example-fileinput" name="new_avatar" class="form-control-file">
                                 </div>
                             </div>
                         </div>

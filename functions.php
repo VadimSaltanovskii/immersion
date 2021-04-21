@@ -106,3 +106,19 @@ function set_social_links($id, $vk, $telega, $inst)
         "inst" => $inst,
     ]);
 }
+// 12. Добавить фото:
+function add_avatar($id, $avatar)
+{
+    $tmp_name = $avatar["tmp_name"];
+    $information = getimagesize($tmp_name);
+    $name = md5_file($tmp_name);
+    $extension = image_type_to_extension($information[2]);
+    move_uploaded_file($tmp_name, "./img/demo/avatars/" . $name . $extension);
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "UPDATE users SET avatar =:avatar WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+        "avatar" => $name . $extension,
+    ]);
+}

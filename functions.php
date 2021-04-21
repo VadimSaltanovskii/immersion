@@ -144,3 +144,13 @@ function edit_credentials($id, $email, $password)
         "password" => password_hash($password, PASSWORD_DEFAULT),
     ]);
 }
+// 15. Удаление пользователя:
+function delete_user($id)
+{
+    $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
+    $sql = "DELETE FROM users WHERE id=:id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id,
+    ]);
+}

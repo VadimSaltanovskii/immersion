@@ -147,6 +147,8 @@ function edit_credentials($id, $email, $password)
 // 15. Удаление пользователя:
 function delete_user($id)
 {
+    $current_user = get_user_by_id($id);
+    unlink("./img/demo/avatars/{$current_user['avatar']}");
     $pdo = new PDO("mysql:host=localhost;dbname=immersion", "root", "root");
     $sql = "DELETE FROM users WHERE id=:id";
     $statement = $pdo->prepare($sql);
